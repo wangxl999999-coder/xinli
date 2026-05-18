@@ -1,0 +1,118 @@
+<view class="container">
+  <view class="record-section card">
+    <text class="section-title">语音记录心情</text>
+    <text class="record-hint">点击下方按钮开始录音，说出你此刻的心情</text>
+    
+    <view class="record-visualizer">
+      <view class="wave-container">
+        <view class="wave-bar" wx:for="{{waveBars}}" wx:key="*this" style="height: {{item}}rpx; animation-delay: {{index * 0.1}}s;"></view>
+      </view>
+    </view>
+
+    <view class="record-controls">
+      <view class="record-btn-wrapper">
+        <view class="record-ring {{isRecording ? 'recording' : ''}}"></view>
+        <view class="record-btn {{isRecording ? 'recording' : ''}}" bindtap="toggleRecording">
+          <text class="record-icon">{{isRecording ? '⏹' : '🎤'}}</text>
+        </view>
+      </view>
+      <text class="record-status">{{isRecording ? '录音中...' : '点击开始录音'}}</text>
+      <text class="record-duration" wx:if="{{isRecording}}">{{formatDuration(recordingDuration)}}</text>
+    </view>
+  </view>
+
+  <view class="audio-player card" wx:if="{{audioRecorded}}">
+    <text class="section-title">录音预览</text>
+    <view class="player-controls">
+      <button class="play-btn" bindtap="playAudio">
+        {{isPlaying ? '⏸' : '▶'}}
+      </button>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{playProgress}}%"></view>
+      </view>
+      <text class="duration">{{formatDuration(audioDuration)}}</text>
+    </view>
+    <view class="player-actions">
+      <button class="btn-secondary" bindtap="reRecord">重新录制</button>
+      <button class="btn-primary" bindtap="analyzeVoice" disabled="{{isAnalyzing}}">
+        {{isAnalyzing ? '分析中...' : '分析情绪'}}
+      </button>
+    </view>
+  </view>
+
+  <view class="tips card">
+    <text class="section-title">录音小贴士</text>
+    <view class="tip-list">
+      <text class="tip-item">• 请在安静的环境下录音，避免背景噪音</text>
+      <text class="tip-item">• 保持麦克风距离嘴巴约10-20厘米</text>
+      <text class="tip-item">• 用自然的语气说话，不要刻意掩饰情绪</text>
+      <text class="tip-item">• 建议录音时长在10-60秒之间</text>
+    </view>
+  </view>
+
+  <view class="result-section card" wx:if="{{analysisResult}}">
+    <text class="section-title">语音情绪分析结果</text>
+    
+    <view class="emotion-overview">
+      <view class="emotion-icon-large">{{emotionIcon}}</view>
+      <view class="emotion-info">
+        <text class="emotion-name">{{emotionName}}</text>
+        <view class="emotion-type-tag {{analysisResult.type}}">
+          {{typeName}}
+        </view>
+      </view>
+      <view class="confidence">
+        <text class="confidence-label">置信度</text>
+        <text class="confidence-value">{{(analysisResult.confidence * 100).toFixed(0)}}%</text>
+      </view>
+    </view>
+
+    <view class="voice-features">
+      <text class="detail-title">声学特征分析</text>
+      <view class="feature-list">
+        <view class="feature-item">
+          <text class="feature-label">语速</text>
+          <view class="feature-bar">
+            <view class="feature-fill speed" style="width: {{analysisResult.features.speechRate * 100}}%"></view>
+          </view>
+          <text class="feature-value">{{getSpeedLabel(analysisResult.features.speechRate)}}</text>
+        </view>
+        <view class="feature-item">
+          <text class="feature-label">音量</text>
+          <view class="feature-bar">
+            <view class="feature-fill volume" style="width: {{analysisResult.features.volume * 100}}%"></view>
+          </view>
+          <text class="feature-value">{{getVolumeLabel(analysisResult.features.volume)}}</text>
+        </view>
+        <view class="feature-item">
+          <text class="feature-label">音调</text>
+          <view class="feature-bar">
+            <view class="feature-fill pitch" style="width: {{analysisResult.features.pitch * 100}}%"></view>
+          </view>
+          <text class="feature-value">{{getPitchLabel(analysisResult.features.pitch)}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="empathy-response">
+      <text class="detail-title">AI 共情回应</text>
+      <view class="response-content">
+        <text class="response-text">{{empathyResponse}}</text>
+      </view>
+    </view>
+
+    <view class="extreme-warning" wx:if="{{extremeAlert.isExtreme}}">
+      <view class="warning-icon">⚠️</view>
+      <view class="warning-content">
+        <text class="warning-title">检测到您可能处于极端情绪状态</text>
+        <text class="warning-text">{{extremeAlert.suggestion}}</text>
+        <button class="btn-danger" bindtap="contactConsultant">联系咨询师</button>
+      </view>
+    </view>
+
+    <view class="action-buttons">
+      <button class="btn-secondary" bindtap="saveRecord">保存记录</button>
+      <button class="btn-primary" bindtap="shareResult">分享结果</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,80 @@
+<view class="container">
+  <view class="input-section card">
+    <text class="section-title">写下你的心情</text>
+    <textarea 
+      class="emotion-input"
+      placeholder="今天发生了什么？有什么感受？都可以写下来..."
+      value="{{inputText}}"
+      bindinput="onInputChange"
+      maxlength="500"
+      auto-height
+    />
+    <view class="input-footer">
+      <text class="char-count">{{inputText.length}}/500</text>
+      <button 
+        class="btn-primary analyze-btn"
+        bindtap="analyzeEmotion"
+        disabled="{{isAnalyzing || inputText.length === 0}}"
+      >
+        {{isAnalyzing ? '分析中...' : '解析情绪'}}
+      </button>
+    </view>
+  </view>
+
+  <view class="quick-phrases card">
+    <text class="section-title">快速选择</text>
+    <view class="phrase-list">
+      <text class="phrase-tag" wx:for="{{quickPhrases}}" wx:key="*this" bindtap="selectPhrase" data-phrase="{{item}}">
+        {{item}}
+      </text>
+    </view>
+  </view>
+
+  <view class="result-section card" wx:if="{{analysisResult}}">
+    <text class="section-title">情绪分析结果</text>
+    
+    <view class="emotion-overview">
+      <view class="emotion-icon-large">{{emotionIcon}}</view>
+      <view class="emotion-info">
+        <text class="emotion-name">{{emotionName}}</text>
+        <view class="emotion-type-tag {{analysisResult.type}}">
+          {{typeName}}
+        </view>
+      </view>
+      <view class="confidence">
+        <text class="confidence-label">置信度</text>
+        <text class="confidence-value">{{(analysisResult.confidence * 100).toFixed(0)}}%</text>
+      </view>
+    </view>
+
+    <view class="emotion-detail" wx:if="{{analysisResult.keywords.length > 0}}">
+      <text class="detail-title">识别到的情绪关键词</text>
+      <view class="keywords">
+        <text class="keyword-tag" wx:for="{{analysisResult.keywords}}" wx:key="*this">
+          {{item}}
+        </text>
+      </view>
+    </view>
+
+    <view class="empathy-response">
+      <text class="detail-title">AI 共情回应</text>
+      <view class="response-content">
+        <text class="response-text">{{empathyResponse}}</text>
+      </view>
+    </view>
+
+    <view class="extreme-warning" wx:if="{{extremeAlert.isExtreme}}">
+      <view class="warning-icon">⚠️</view>
+      <view class="warning-content">
+        <text class="warning-title">检测到您可能处于极端情绪状态</text>
+        <text class="warning-text">{{extremeAlert.suggestion}}</text>
+        <button class="btn-danger" bindtap="contactConsultant">联系咨询师</button>
+      </view>
+    </view>
+
+    <view class="action-buttons">
+      <button class="btn-secondary" bindtap="saveRecord">保存记录</button>
+      <button class="btn-primary" bindtap="shareResult">分享结果</button>
+    </view>
+  </view>
+</view>

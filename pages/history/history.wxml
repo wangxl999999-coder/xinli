@@ -1,0 +1,79 @@
+<view class="container">
+  <view class="filter-bar card">
+    <view class="filter-tabs">
+      <text 
+        class="filter-tab {{currentFilter === 'all' ? 'active' : ''}}"
+        bindtap="setFilter"
+        data-filter="all"
+      >
+        全部
+      </text>
+      <text 
+        class="filter-tab {{currentFilter === 'text' ? 'active' : ''}}"
+        bindtap="setFilter"
+        data-filter="text"
+      >
+        文字
+      </text>
+      <text 
+        class="filter-tab {{currentFilter === 'voice' ? 'active' : ''}}"
+        bindtap="setFilter"
+        data-filter="voice"
+      >
+        语音
+      </text>
+      <text 
+        class="filter-tab {{currentFilter === 'face' ? 'active' : ''}}"
+        bindtap="setFilter"
+        data-filter="face"
+      >
+        表情
+      </text>
+    </view>
+  </view>
+
+  <view class="record-list">
+    <view class="record-item card" wx:for="{{filteredRecords}}" wx:key="id" bindtap="viewRecord" data-record="{{item}}">
+      <view class="record-header">
+        <view class="record-type">
+          <text class="type-icon">{{getTypeIcon(item.type)}}</text>
+          <text class="type-label">{{getTypeLabel(item.type)}}</text>
+        </view>
+        <text class="record-time">{{item.formattedTime}}</text>
+      </view>
+      
+      <view class="record-emotion">
+        <text class="emotion-icon">{{getEmotionIcon(item.emotion.dominant)}}</text>
+        <view class="emotion-info">
+          <text class="emotion-name">{{getEmotionName(item.emotion.dominant)}}</text>
+          <view class="emotion-type-tag {{item.emotion.type}}">
+            {{getTypeName(item.emotion.type)}}
+          </view>
+        </view>
+        <view class="confidence">
+          <text class="confidence-label">置信度</text>
+          <text class="confidence-value">{{(item.emotion.confidence * 100).toFixed(0)}}%</text>
+        </view>
+      </view>
+
+      <view class="record-preview" wx:if="{{item.type === 'text'}}">
+        <text class="preview-text">{{item.content.substring(0, 50)}}{{item.content.length > 50 ? '...' : ''}}</text>
+      </view>
+
+      <view class="record-footer">
+        <text class="view-detail">查看详情 ></text>
+      </view>
+    </view>
+
+    <view class="empty-state card" wx:if="{{filteredRecords.length === 0}}">
+      <text class="empty-icon">📝</text>
+      <text class="empty-text">暂无记录</text>
+      <text class="empty-hint">快去记录你的心情吧</text>
+      <button class="btn-primary" bindtap="goToRecord">立即记录</button>
+    </view>
+  </view>
+
+  <view class="load-more" wx:if="{{records.length > 0 && filteredRecords.length >= 10}}">
+    <text class="load-more-text">加载更多</text>
+  </view>
+</view>

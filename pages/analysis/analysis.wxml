@@ -1,0 +1,134 @@
+<view class="container">
+  <view class="date-selector card">
+    <view class="date-tabs">
+      <text 
+        class="date-tab {{currentPeriod === '7' ? 'active' : ''}}"
+        bindtap="setPeriod"
+        data-period="7"
+      >
+        近7天
+      </text>
+      <text 
+        class="date-tab {{currentPeriod === '30' ? 'active' : ''}}"
+        bindtap="setPeriod"
+        data-period="30"
+      >
+        近30天
+      </text>
+      <text 
+        class="date-tab {{currentPeriod === '90' ? 'active' : ''}}"
+        bindtap="setPeriod"
+        data-period="90"
+      >
+        近90天
+      </text>
+    </view>
+  </view>
+
+  <view class="summary-cards">
+    <view class="summary-card card">
+      <text class="summary-icon">📊</text>
+      <text class="summary-value">{{stats.total}}</text>
+      <text class="summary-label">记录总数</text>
+    </view>
+    <view class="summary-card card">
+      <text class="summary-icon">😊</text>
+      <text class="summary-value">{{positivePercent}}%</text>
+      <text class="summary-label">积极情绪</text>
+    </view>
+    <view class="summary-card card">
+      <text class="summary-icon">😔</text>
+      <text class="summary-value">{{negativePercent}}%</text>
+      <text class="summary-label">消极情绪</text>
+    </view>
+  </view>
+
+  <view class="chart-section card">
+    <text class="section-title">情绪分布</text>
+    <view class="pie-chart">
+      <view class="pie-container">
+        <view class="pie-center">
+          <text class="pie-total">{{stats.total}}</text>
+          <text class="pie-label">总记录</text>
+        </view>
+      </view>
+      <view class="pie-legend">
+        <view class="legend-item" wx:for="{{pieData}}" wx:key="name">
+          <view class="legend-color" style="background: {{item.color}};"></view>
+          <text class="legend-name">{{item.name}}</text>
+          <text class="legend-value">{{item.value}}次</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="chart-section card">
+    <text class="section-title">情绪变化趋势</text>
+    <view class="line-chart">
+      <view class="chart-grid">
+        <view class="grid-line" wx:for="{{5}}" wx:key="*this"></view>
+      </view>
+      <view class="chart-lines">
+        <view class="line-series positive">
+          <view class="line-path" style="background: linear-gradient(90deg, transparent, #00b894);"></view>
+          <view class="data-points">
+            <view class="data-point" wx:for="{{trendData.positive}}" wx:key="*this" style="bottom: {{item * 80 + 10}}%;"></view>
+          </view>
+        </view>
+        <view class="line-series negative">
+          <view class="line-path" style="background: linear-gradient(90deg, transparent, #e17055);"></view>
+          <view class="data-points">
+            <view class="data-point" wx:for="{{trendData.negative}}" wx:key="*this" style="bottom: {{item * 80 + 10}}%;"></view>
+          </view>
+        </view>
+      </view>
+      <view class="chart-xaxis">
+        <text class="xaxis-label" wx:for="{{chartLabels}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+    <view class="chart-legend">
+      <view class="legend-item">
+        <view class="legend-dot positive"></view>
+        <text class="legend-text">积极</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot negative"></view>
+        <text class="legend-text">消极</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="insights-section card">
+    <text class="section-title">情绪洞察</text>
+    <view class="insight-list">
+      <view class="insight-item">
+        <view class="insight-icon">📈</view>
+        <view class="insight-content">
+          <text class="insight-title">情绪趋势</text>
+          <text class="insight-desc">{{insights.trend}}</text>
+        </view>
+      </view>
+      <view class="insight-item">
+        <view class="insight-icon">🎯</view>
+        <view class="insight-content">
+          <text class="insight-title">主要情绪</text>
+          <text class="insight-desc">{{insights.mainEmotion}}</text>
+        </view>
+      </view>
+      <view class="insight-item">
+        <view class="insight-icon">💡</view>
+        <view class="insight-content">
+          <text class="insight-title">建议</text>
+          <text class="insight-desc">{{insights.suggestion}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state card" wx:if="{{stats.total === 0}}">
+    <text class="empty-icon">📊</text>
+    <text class="empty-text">暂无数据</text>
+    <text class="empty-hint">开始记录情绪后，这里会显示数据分析</text>
+    <button class="btn-primary" bindtap="goToRecord">立即记录</button>
+  </view>
+</view>

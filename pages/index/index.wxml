@@ -1,0 +1,59 @@
+<view class="container">
+  <view class="header card">
+    <view class="greeting">
+      <text class="greeting-text">你好，欢迎来到</text>
+      <text class="app-name">心语AI</text>
+    </view>
+    <view class="mood-score">
+      <text class="score-label">今日心情指数</text>
+      <text class="score-value">{{moodScore}}</text>
+      <view class="score-bar">
+        <view class="score-fill" style="width: {{moodScore}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="quick-actions card">
+    <text class="section-title">立即记录情绪</text>
+    <view class="action-grid">
+      <view class="action-item" bindtap="goToTextAnalysis">
+        <view class="action-icon text-icon">✍️</view>
+        <text class="action-label">文字倾诉</text>
+      </view>
+      <view class="action-item" bindtap="goToVoiceAnalysis">
+        <view class="action-icon voice-icon">🎤</view>
+        <text class="action-label">语音记录</text>
+      </view>
+      <view class="action-item" bindtap="goToFaceAnalysis">
+        <view class="action-icon face-icon">😊</view>
+        <text class="action-label">表情识别</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="today-summary card" wx:if="{{todayRecords.length > 0}}">
+    <text class="section-title">今日记录</text>
+    <view class="record-list">
+      <view class="record-item" wx:for="{{todayRecords}}" wx:key="id">
+        <view class="record-emotion">{{emotionIcons[item.emotion.dominant] || '😶'}}</view>
+        <view class="record-content">
+          <text class="record-text">{{item.content.substring(0, 30)}}{{item.content.length > 30 ? '...' : ''}}</text>
+          <text class="record-time">{{item.formattedTime}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state card" wx:else>
+    <text class="empty-icon">💭</text>
+    <text class="empty-text">今天还没有记录情绪哦</text>
+    <text class="empty-hint">选择上方任意方式开始记录吧</text>
+  </view>
+
+  <view class="tips card">
+    <text class="section-title">每日小贴士</text>
+    <view class="tip-content">
+      <text class="tip-text">{{dailyTip}}</text>
+    </view>
+  </view>
+</view>

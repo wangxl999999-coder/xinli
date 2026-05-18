@@ -1,0 +1,391 @@
+.record-section {
+  padding: 30rpx;
+  text-align: center;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  color: #333;
+}
+
+.record-hint {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+}
+
+.record-visualizer {
+  margin-bottom: 40rpx;
+}
+
+.wave-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8rpx;
+  height: 100rpx;
+}
+
+.wave-bar {
+  width: 8rpx;
+  background: linear-gradient(to top, #6c5ce7, #a29bfe);
+  border-radius: 4rpx;
+  animation: wave 1s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% {
+    height: 20rpx;
+    opacity: 0.5;
+  }
+  50% {
+    height: 80rpx;
+    opacity: 1;
+  }
+}
+
+.record-controls {
+  position: relative;
+}
+
+.record-btn-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20rpx;
+}
+
+.record-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 4rpx solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.record-ring.recording {
+  border-color: #e74c3c;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+.record-btn {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.record-btn.recording {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.record-icon {
+  font-size: 50rpx;
+}
+
+.record-status {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.record-duration {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.audio-player {
+  padding: 30rpx;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 25rpx;
+}
+
+.play-btn {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 80rpx;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8rpx;
+  background: #e0e0e0;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+  transition: width 0.1s linear;
+}
+
+.duration {
+  font-size: 24rpx;
+  color: #999;
+  min-width: 80rpx;
+  text-align: right;
+}
+
+.player-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.player-actions button {
+  flex: 1;
+}
+
+.tips {
+  padding: 30rpx;
+}
+
+.tip-list {
+  margin-top: 10rpx;
+}
+
+.tip-item {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 2;
+}
+
+.result-section {
+  padding: 30rpx;
+}
+
+.emotion-overview {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.emotion-icon-large {
+  font-size: 80rpx;
+  margin-right: 25rpx;
+}
+
+.emotion-info {
+  flex: 1;
+}
+
+.emotion-name {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.emotion-type-tag {
+  display: inline-block;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.emotion-type-tag.positive {
+  background: #d4edda;
+  color: #155724;
+}
+
+.emotion-type-tag.negative {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.emotion-type-tag.neutral {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.confidence {
+  text-align: right;
+}
+
+.confidence-label {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 5rpx;
+}
+
+.confidence-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #6c5ce7;
+}
+
+.voice-features {
+  margin-bottom: 30rpx;
+}
+
+.detail-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 20rpx;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.feature-label {
+  width: 80rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.feature-bar {
+  flex: 1;
+  height: 12rpx;
+  background: #e0e0e0;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.feature-fill {
+  height: 100%;
+  border-radius: 6rpx;
+}
+
+.feature-fill.speed {
+  background: linear-gradient(90deg, #74b9ff, #0984e3);
+}
+
+.feature-fill.volume {
+  background: linear-gradient(90deg, #fd79a8, #e84393);
+}
+
+.feature-fill.pitch {
+  background: linear-gradient(90deg, #55efc4, #00b894);
+}
+
+.feature-value {
+  width: 80rpx;
+  font-size: 24rpx;
+  color: #999;
+  text-align: right;
+}
+
+.empathy-response {
+  margin-bottom: 30rpx;
+}
+
+.response-content {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+  padding: 25rpx;
+  border-radius: 15rpx;
+  border-left: 6rpx solid #ff6b6b;
+}
+
+.response-text {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.8;
+}
+
+.extreme-warning {
+  display: flex;
+  background: #fff5f5;
+  border: 2rpx solid #ffcdd2;
+  border-radius: 15rpx;
+  padding: 25rpx;
+  margin-bottom: 30rpx;
+}
+
+.warning-icon {
+  font-size: 50rpx;
+  margin-right: 20rpx;
+}
+
+.warning-content {
+  flex: 1;
+}
+
+.warning-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #c0392b;
+  margin-bottom: 10rpx;
+}
+
+.warning-text {
+  display: block;
+  font-size: 26rpx;
+  color: #e74c3c;
+  margin-bottom: 15rpx;
+  line-height: 1.6;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 26rpx;
+  padding: 15rpx 30rpx;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-buttons button {
+  flex: 1;
+}

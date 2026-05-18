@@ -1,0 +1,134 @@
+<view class="container">
+  <view class="header card">
+    <view class="user-info">
+      <view class="avatar-wrapper">
+        <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="mood-badge">
+          <text class="mood-icon">{{currentMood.icon}}</text>
+        </view>
+      </view>
+      <view class="user-details">
+        <text class="username">{{userInfo.nickName || '心语用户'}}</text>
+        <text class="user-motto">记录心情，关爱自己</text>
+      </view>
+    </view>
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-value">{{totalRecords}}</text>
+        <text class="stat-label">记录总数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{streakDays}}</text>
+        <text class="stat-label">连续记录</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{positiveRate}}%</text>
+        <text class="stat-label">积极率</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="settings-section card">
+    <text class="section-title">个性化设置</text>
+    
+    <view class="setting-item">
+      <view class="setting-left">
+        <text class="setting-icon">🎨</text>
+        <text class="setting-label">回应风格</text>
+      </view>
+      <picker bindchange="onStyleChange" value="{{styleIndex}}" range="{{styleOptions}}">
+        <view class="setting-right">
+          <text class="setting-value">{{styleOptions[styleIndex]}}</text>
+          <text class="setting-arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="setting-item">
+      <view class="setting-left">
+        <text class="setting-icon">🔔</text>
+        <text class="setting-label">每日提醒</text>
+      </view>
+      <view class="setting-right">
+        <switch checked="{{reminderEnabled}}" bindchange="onReminderToggle" />
+      </view>
+    </view>
+
+    <view class="setting-item" wx:if="{{reminderEnabled}}">
+      <view class="setting-left">
+        <text class="setting-icon">⏰</text>
+        <text class="setting-label">提醒时间</text>
+      </view>
+      <picker mode="time" value="{{reminderTime}}" bindchange="onTimeChange">
+        <view class="setting-right">
+          <text class="setting-value">{{reminderTime}}</text>
+          <text class="setting-arrow">></text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="tools-section card">
+    <text class="section-title">心理工具箱</text>
+    <view class="tool-grid">
+      <view class="tool-item" bindtap="openTool" data-tool="breathing">
+        <text class="tool-icon">🌬️</text>
+        <text class="tool-label">呼吸放松</text>
+      </view>
+      <view class="tool-item" bindtap="openTool" data-tool="meditation">
+        <text class="tool-icon">🧘</text>
+        <text class="tool-label">冥想引导</text>
+      </view>
+      <view class="tool-item" bindtap="openTool" data-tool="affirmation">
+        <text class="tool-icon">💪</text>
+        <text class="tool-label">积极暗示</text>
+      </view>
+      <view class="tool-item" bindtap="openTool" data-tool="gratitude">
+        <text class="tool-icon">🙏</text>
+        <text class="tool-label">感恩日记</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="support-section card">
+    <text class="section-title">心理支持</text>
+    <view class="support-card" bindtap="contactSupport">
+      <view class="support-left">
+        <text class="support-icon">❤️</text>
+        <view class="support-info">
+          <text class="support-title">心理咨询热线</text>
+          <text class="support-desc">400-161-9995</text>
+        </view>
+      </view>
+      <text class="support-arrow">></text>
+    </view>
+  </view>
+
+  <view class="about-section card">
+    <view class="about-item" bindtap="showAbout">
+      <view class="about-left">
+        <text class="about-icon">📱</text>
+        <text class="about-label">关于心语</text>
+      </view>
+      <text class="about-arrow">></text>
+    </view>
+    <view class="about-item" bindtap="shareApp">
+      <view class="about-left">
+        <text class="about-icon">📤</text>
+        <text class="about-label">分享给好友</text>
+      </view>
+      <text class="about-arrow">></text>
+    </view>
+    <view class="about-item" bindtap="clearData">
+      <view class="about-left">
+        <text class="about-icon">🗑️</text>
+        <text class="about-label">清除数据</text>
+      </view>
+      <text class="about-arrow">></text>
+    </view>
+  </view>
+
+  <view class="version">
+    <text class="version-text">心语AI v1.0.0</text>
+  </view>
+</view>

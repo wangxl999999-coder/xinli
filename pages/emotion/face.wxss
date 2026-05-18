@@ -1,0 +1,320 @@
+.camera-section {
+  padding: 30rpx;
+  text-align: center;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  color: #333;
+}
+
+.camera-hint {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 30rpx;
+}
+
+.camera-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+}
+
+.face-camera {
+  width: 100%;
+  height: 100%;
+}
+
+.captured-image {
+  width: 100%;
+  height: 100%;
+}
+
+.face-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.face-frame {
+  width: 300rpx;
+  height: 380rpx;
+  border: 4rpx dashed rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+
+.camera-controls {
+  display: flex;
+  justify-content: center;
+}
+
+.capture-btn {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capture-ring {
+  position: absolute;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+  box-shadow: 0 0 0 4rpx #6c5ce7;
+}
+
+.capture-inner {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  background: #6c5ce7;
+}
+
+.capture-btn:active .capture-inner {
+  transform: scale(0.9);
+}
+
+.capture-actions {
+  display: flex;
+  gap: 20rpx;
+  width: 100%;
+}
+
+.capture-actions button {
+  flex: 1;
+}
+
+.expression-guide {
+  padding: 30rpx;
+}
+
+.expression-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20rpx;
+}
+
+.expression-item {
+  text-align: center;
+  width: 100rpx;
+}
+
+.expression-icon {
+  display: block;
+  font-size: 50rpx;
+  margin-bottom: 8rpx;
+}
+
+.expression-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.result-section {
+  padding: 30rpx;
+}
+
+.emotion-overview {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.emotion-icon-large {
+  font-size: 80rpx;
+  margin-right: 25rpx;
+}
+
+.emotion-info {
+  flex: 1;
+}
+
+.emotion-name {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.emotion-type-tag {
+  display: inline-block;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.emotion-type-tag.positive {
+  background: #d4edda;
+  color: #155724;
+}
+
+.emotion-type-tag.negative {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.emotion-type-tag.neutral {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.confidence {
+  text-align: right;
+}
+
+.confidence-label {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 5rpx;
+}
+
+.confidence-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #6c5ce7;
+}
+
+.emotion-breakdown {
+  margin-bottom: 30rpx;
+}
+
+.detail-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 20rpx;
+}
+
+.breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.breakdown-name {
+  width: 80rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.breakdown-bar {
+  flex: 1;
+  height: 16rpx;
+  background: #e0e0e0;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.breakdown-fill {
+  height: 100%;
+  border-radius: 8rpx;
+  transition: width 0.5s ease;
+}
+
+.breakdown-value {
+  width: 80rpx;
+  font-size: 24rpx;
+  color: #999;
+  text-align: right;
+}
+
+.empathy-response {
+  margin-bottom: 30rpx;
+}
+
+.response-content {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+  padding: 25rpx;
+  border-radius: 15rpx;
+  border-left: 6rpx solid #ff6b6b;
+}
+
+.response-text {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.8;
+}
+
+.extreme-warning {
+  display: flex;
+  background: #fff5f5;
+  border: 2rpx solid #ffcdd2;
+  border-radius: 15rpx;
+  padding: 25rpx;
+  margin-bottom: 30rpx;
+}
+
+.warning-icon {
+  font-size: 50rpx;
+  margin-right: 20rpx;
+}
+
+.warning-content {
+  flex: 1;
+}
+
+.warning-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #c0392b;
+  margin-bottom: 10rpx;
+}
+
+.warning-text {
+  display: block;
+  font-size: 26rpx;
+  color: #e74c3c;
+  margin-bottom: 15rpx;
+  line-height: 1.6;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 26rpx;
+  padding: 15rpx 30rpx;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-buttons button {
+  flex: 1;
+}

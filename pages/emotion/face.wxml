@@ -1,0 +1,125 @@
+<view class="container">
+  <view class="camera-section card">
+    <text class="section-title">面部表情识别</text>
+    <text class="camera-hint">请将脸部对准摄像头，保持自然表情</text>
+    
+    <view class="camera-wrapper">
+      <camera 
+        wx:if="{{!capturedImage}}"
+        class="face-camera"
+        device-position="front"
+        flash="off"
+        binderror="onCameraError"
+      >
+        <view class="face-overlay">
+          <view class="face-frame"></view>
+        </view>
+      </camera>
+      <image 
+        wx:else
+        class="captured-image"
+        src="{{capturedImage}}"
+        mode="aspectFill"
+      />
+    </view>
+
+    <view class="camera-controls">
+      <button 
+        wx:if="{{!capturedImage}}"
+        class="capture-btn"
+        bindtap="takePhoto"
+      >
+        <view class="capture-ring"></view>
+        <view class="capture-inner"></view>
+      </button>
+      <view wx:else class="capture-actions">
+        <button class="btn-secondary" bindtap="retakePhoto">重新拍摄</button>
+        <button class="btn-primary" bindtap="analyzeFace" disabled="{{isAnalyzing}}">
+          {{isAnalyzing ? '分析中...' : '分析表情'}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view class="expression-guide card">
+    <text class="section-title">表情参考</text>
+    <view class="expression-grid">
+      <view class="expression-item">
+        <text class="expression-icon">😊</text>
+        <text class="expression-label">开心</text>
+      </view>
+      <view class="expression-item">
+        <text class="expression-icon">😢</text>
+        <text class="expression-label">悲伤</text>
+      </view>
+      <view class="expression-item">
+        <text class="expression-icon">😠</text>
+        <text class="expression-label">愤怒</text>
+      </view>
+      <view class="expression-item">
+        <text class="expression-icon">😰</text>
+        <text class="expression-label">焦虑</text>
+      </view>
+      <view class="expression-item">
+        <text class="expression-icon">😌</text>
+        <text class="expression-label">平静</text>
+      </view>
+      <view class="expression-item">
+        <text class="expression-icon">😮</text>
+        <text class="expression-label">惊讶</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="result-section card" wx:if="{{analysisResult}}">
+    <text class="section-title">表情分析结果</text>
+    
+    <view class="emotion-overview">
+      <view class="emotion-icon-large">{{emotionIcon}}</view>
+      <view class="emotion-info">
+        <text class="emotion-name">{{emotionName}}</text>
+        <view class="emotion-type-tag {{analysisResult.type}}">
+          {{typeName}}
+        </view>
+      </view>
+      <view class="confidence">
+        <text class="confidence-label">置信度</text>
+        <text class="confidence-value">{{(analysisResult.confidence * 100).toFixed(0)}}%</text>
+      </view>
+    </view>
+
+    <view class="emotion-breakdown">
+      <text class="detail-title">情绪成分分析</text>
+      <view class="breakdown-list">
+        <view class="breakdown-item" wx:for="{{breakdownData}}" wx:key="name">
+          <text class="breakdown-name">{{item.name}}</text>
+          <view class="breakdown-bar">
+            <view class="breakdown-fill" style="width: {{item.value * 100}}%; background: {{item.color}};"></view>
+          </view>
+          <text class="breakdown-value">{{(item.value * 100).toFixed(0)}}%</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="empathy-response">
+      <text class="detail-title">AI 共情回应</text>
+      <view class="response-content">
+        <text class="response-text">{{empathyResponse}}</text>
+      </view>
+    </view>
+
+    <view class="extreme-warning" wx:if="{{extremeAlert.isExtreme}}">
+      <view class="warning-icon">⚠️</view>
+      <view class="warning-content">
+        <text class="warning-title">检测到您可能处于极端情绪状态</text>
+        <text class="warning-text">{{extremeAlert.suggestion}}</text>
+        <button class="btn-danger" bindtap="contactConsultant">联系咨询师</button>
+      </view>
+    </view>
+
+    <view class="action-buttons">
+      <button class="btn-secondary" bindtap="saveRecord">保存记录</button>
+      <button class="btn-primary" bindtap="shareResult">分享结果</button>
+    </view>
+  </view>
+</view>

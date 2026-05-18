@@ -72,13 +72,13 @@
         <view class="line-series positive">
           <view class="line-path" style="background: linear-gradient(90deg, transparent, #00b894);"></view>
           <view class="data-points">
-            <view class="data-point" wx:for="{{trendData.positive}}" wx:key="*this" style="bottom: {{item * 80 + 10}}%;"></view>
+            <view class="data-point" wx:for="{{trendData.positive}}" wx:key="index" style="bottom: {{item}}%;"></view>
           </view>
         </view>
         <view class="line-series negative">
           <view class="line-path" style="background: linear-gradient(90deg, transparent, #e17055);"></view>
           <view class="data-points">
-            <view class="data-point" wx:for="{{trendData.negative}}" wx:key="*this" style="bottom: {{item * 80 + 10}}%;"></view>
+            <view class="data-point" wx:for="{{trendData.negative}}" wx:key="index" style="bottom: {{item}}%;"></view>
           </view>
         </view>
       </view>

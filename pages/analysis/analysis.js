@@ -51,14 +51,53 @@ Page({
     ].filter(item => item.value > 0)
 
     const insights = this.generateInsights(stats)
+    
+    const trendData = this.generateTrendData(stats, days)
+    const chartLabels = this.generateChartLabels(days)
 
     this.setData({
       stats,
       positivePercent,
       negativePercent,
       pieData,
-      insights
+      insights,
+      trendData,
+      chartLabels
     })
+  },
+
+  generateTrendData(stats, days) {
+    const daysArray = this.getLastDays(days)
+    const positive = []
+    const negative = []
+    
+    daysArray.forEach(day => {
+      const dayData = stats.byDay && stats.byDay[day] ? stats.byDay[day] : { positive: 0, negative: 0, neutral: 0 }
+      const dayTotal = (dayData.positive || 0) + (dayData.negative || 0) + (dayData.neutral || 0)
+      if (dayTotal > 0) {
+        positive.push(Math.min(90, Math.max(10, ((dayData.positive || 0) / dayTotal) * 80 + 10)))
+        negative.push(Math.min(90, Math.max(10, ((dayData.negative || 0) / dayTotal) * 80 + 10)))
+      } else {
+        positive.push(10)
+        negative.push(10)
+      }
+    })
+    
+    return { positive, negative }
+  },
+
+  generateChartLabels(days) {
+    return this.getLastDays(days).map(d => d.slice(5))
+  },
+
+  getLastDays(days) {
+    const result = []
+    for (let i = days - 1; i >= 0; i--) {
+      const date = new Date()
+      date.setDate(date.getDate() - i)
+      result.push(date.toLocaleDateString())
+    }
+    return result
   },
 
   generateInsights(stats) {

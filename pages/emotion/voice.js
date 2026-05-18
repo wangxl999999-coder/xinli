@@ -25,12 +25,14 @@ Page({
   innerAudioContext: null,
   recordingTimer: null,
   playTimer: null,
+  waveTimer: null,
 
   onLoad() {
     this.recorderManager = wx.getRecorderManager()
     this.innerAudioContext = wx.createInnerAudioContext()
 
     this.recorderManager.onStop((res) => {
+      console.log('录音停止', res)
       this.audioPath = res.tempFilePath
       this.setData({
         audioRecorded: true,
@@ -42,13 +44,28 @@ Page({
       })
     })
 
+    this.recorderManager.onError((err) => {
+      console.error('录音错误', err)
+      wx.showToast({
+        title: '录音失败',
+        icon: 'none'
+      })
+      this.setData({ isRecording: false })
+    })
+
     this.innerAudioContext.onEnded(() => {
       this.setData({ isPlaying: false, playProgress: 0 })
       clearInterval(this.playTimer)
     })
+
+    this.innerAudioContext.onError((err) => {
+      console.error('播放错误', err)
+      this.setData({ isPlaying: false })
+    })
   },
 
   toggleRecording() {
+    console.log('点击录音按钮', this.data.isRecording)
     if (this.data.isRecording) {
       this.stopRecording()
     } else {
@@ -57,43 +74,59 @@ Page({
   },
 
   startRecording() {
-    wx.authorize({
-      scope: 'scope.record',
-      success: () => {
-        this.recorderManager.start({
-          duration: 60000,
-          sampleRate: 16000,
-          numberOfChannels: 1,
-          encodeBitRate: 48000,
-          format: 'mp3'
-        })
-
-        this.setData({
-          isRecording: true,
-          recordingDuration: 0,
-          audioRecorded: false,
-          analysisResult: null
-        })
-
-        this.recordingTimer = setInterval(() => {
-          this.setData({
-            recordingDuration: this.data.recordingDuration + 1
+    console.log('开始录音')
+    wx.getSetting({
+      success: (res) => {
+        if (!res.authSetting['scope.record']) {
+          wx.authorize({
+            scope: 'scope.record',
+            success: () => {
+              console.log('授权成功')
+              this.doRecord()
+            },
+            fail: () => {
+              console.log('授权失败')
+              wx.showModal({
+                title: '需要录音权限',
+                content: '请在设置中开启录音权限，以便进行语音情绪分析',
+                showCancel: false
+              })
+            }
           })
-        }, 1000)
-
-        this.startWaveAnimation()
-      },
-      fail: () => {
-        wx.showModal({
-          title: '需要录音权限',
-          content: '请在设置中开启录音权限，以便进行语音情绪分析',
-          showCancel: false
-        })
+        } else {
+          this.doRecord()
+        }
       }
     })
   },
 
+  doRecord() {
+    this.recorderManager.start({
+      duration: 60000,
+      sampleRate: 16000,
+      numberOfChannels: 1,
+      encodeBitRate: 48000,
+      format: 'mp3'
+    })
+
+    this.setData({
+      isRecording: true,
+      recordingDuration: 0,
+      audioRecorded: false,
+      analysisResult: null
+    })
+
+    this.recordingTimer = setInterval(() => {
+      this.setData({
+        recordingDuration: this.data.recordingDuration + 1
+      })
+    }, 1000)
+
+    this.startWaveAnimation()
+  },
+
   stopRecording() {
+    console.log('停止录音')
     this.recorderManager.stop()
     this.setData({ isRecording: false })
     clearInterval(this.recordingTimer)
@@ -165,6 +198,7 @@ Page({
       analysis.dominant = emotionTypes[Math.floor(Math.random() * emotionTypes.length)]
       analysis.type = ['happy', 'calm'].includes(analysis.dominant) ? 'positive' : 
                      ['sad', 'angry', 'anxious'].includes(analysis.dominant) ? 'negative' : 'neutral'
+      analysis.confidence = Math.random() * 0.3 + 0.6
 
       const response = empathyEngine.generateResponse(
         analysis,
@@ -213,7 +247,8 @@ Page({
       type: 'voice',
       content: '语音记录',
       emotion: this.data.analysisResult,
-      response: this.data.empathyResponse
+      response: this.data.empathyResponse,
+      timestamp: new Date().toISOString()
     }
 
     app.addEmotionRecord(record)
@@ -258,7 +293,9 @@ Page({
     clearInterval(this.recordingTimer)
     clearInterval(this.playTimer)
     clearInterval(this.waveTimer)
-    this.innerAudioContext.destroy()
+    if (this.innerAudioContext) {
+      this.innerAudioContext.destroy()
+    }
   },
 
   onShareAppMessage() {

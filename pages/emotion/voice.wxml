@@ -10,9 +10,9 @@
     </view>
 
     <view class="record-controls">
-      <view class="record-btn-wrapper">
+      <view class="record-btn-wrapper" bindtap="toggleRecording">
         <view class="record-ring {{isRecording ? 'recording' : ''}}"></view>
-        <view class="record-btn {{isRecording ? 'recording' : ''}}" bindtap="toggleRecording">
+        <view class="record-btn {{isRecording ? 'recording' : ''}}">
           <text class="record-icon">{{isRecording ? '⏹' : '🎤'}}</text>
         </view>
       </view>

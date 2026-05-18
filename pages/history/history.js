@@ -15,7 +15,8 @@ Page({
   loadRecords() {
     const records = app.globalData.emotionHistory.map(record => ({
       ...record,
-      formattedTime: chartHelper.formatDate(record.timestamp)
+      formattedTime: chartHelper.formatDate(record.timestamp),
+      confidencePercent: Math.round(record.emotion.confidence * 100)
     }))
 
     this.setData({ records })

@@ -84,7 +84,7 @@
       </view>
       <view class="confidence">
         <text class="confidence-label">置信度</text>
-        <text class="confidence-value">{{(analysisResult.confidence * 100).toFixed(0)}}%</text>
+        <text class="confidence-value">{{confidencePercent}}%</text>
       </view>
     </view>
 
@@ -94,9 +94,9 @@
         <view class="breakdown-item" wx:for="{{breakdownData}}" wx:key="name">
           <text class="breakdown-name">{{item.name}}</text>
           <view class="breakdown-bar">
-            <view class="breakdown-fill" style="width: {{item.value * 100}}%; background: {{item.color}};"></view>
+            <view class="breakdown-fill" style="width: {{item.percent}}%; background: {{item.color}};"></view>
           </view>
-          <text class="breakdown-value">{{(item.value * 100).toFixed(0)}}%</text>
+          <text class="breakdown-value">{{item.percent}}%</text>
         </view>
       </view>
     </view>

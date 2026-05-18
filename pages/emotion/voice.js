@@ -182,6 +182,7 @@ Page({
         typeName: analysis.type === 'positive' ? '积极情绪' : 
                   analysis.type === 'negative' ? '消极情绪' : '中性情绪',
         extremeAlert: extremeAlert,
+        confidencePercent: Math.round(analysis.confidence * 100),
         isAnalyzing: false
       })
     }, 1500)

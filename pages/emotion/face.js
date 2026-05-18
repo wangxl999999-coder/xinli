@@ -87,11 +87,11 @@ Page({
       const extremeAlert = emotionAnalyzer.detectExtremeEmotion(analysis)
 
       const breakdownData = [
-        { name: '开心', value: analysis.emotions.happy || 0.1, color: '#fdcb6e' },
-        { name: '悲伤', value: analysis.emotions.sad || 0.1, color: '#6c5ce7' },
-        { name: '愤怒', value: analysis.emotions.angry || 0.1, color: '#d63031' },
-        { name: '惊讶', value: analysis.emotions.surprise || 0.1, color: '#74b9ff' },
-        { name: '平静', value: analysis.emotions.neutral || 0.1, color: '#00b894' }
+        { name: '开心', value: analysis.emotions.happy || 0.1, percent: Math.round((analysis.emotions.happy || 0.1) * 100), color: '#fdcb6e' },
+        { name: '悲伤', value: analysis.emotions.sad || 0.1, percent: Math.round((analysis.emotions.sad || 0.1) * 100), color: '#6c5ce7' },
+        { name: '愤怒', value: analysis.emotions.angry || 0.1, percent: Math.round((analysis.emotions.angry || 0.1) * 100), color: '#d63031' },
+        { name: '惊讶', value: analysis.emotions.surprise || 0.1, percent: Math.round((analysis.emotions.surprise || 0.1) * 100), color: '#74b9ff' },
+        { name: '平静', value: analysis.emotions.neutral || 0.1, percent: Math.round((analysis.emotions.neutral || 0.1) * 100), color: '#00b894' }
       ]
 
       this.setData({
@@ -103,6 +103,7 @@ Page({
                   analysis.type === 'negative' ? '消极情绪' : '中性情绪',
         extremeAlert: extremeAlert,
         breakdownData: breakdownData,
+        confidencePercent: Math.round(analysis.confidence * 100),
         isAnalyzing: false
       })
     }, 1500)

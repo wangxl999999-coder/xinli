@@ -52,7 +52,7 @@
         </view>
         <view class="confidence">
           <text class="confidence-label">置信度</text>
-          <text class="confidence-value">{{(item.emotion.confidence * 100).toFixed(0)}}%</text>
+          <text class="confidence-value">{{item.confidencePercent}}%</text>
         </view>
       </view>
 
